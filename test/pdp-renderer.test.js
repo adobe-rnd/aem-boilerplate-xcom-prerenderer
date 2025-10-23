@@ -45,6 +45,10 @@ const fakeParams = {
 describe('pdp-renderer', () => {
   const server = useMockServer();
 
+  beforeEach(() => {
+    server.use(handlers.defaultProductTemplate);
+  });
+
   describe('basic functionality', () => {
     test('main should be defined', () => {
       expect(action.main).toBeInstanceOf(Function)

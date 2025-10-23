@@ -12,20 +12,22 @@ const productTemplateCache = {};
 function toTemplateProductData(baseProduct) {
   const primaryImage = getPrimaryImage(baseProduct)?.url;
 
+
   return {
     name: sanitize(baseProduct.name, 'inline'),
     description: sanitize(baseProduct.description, 'all'),
     externalId: sanitize(baseProduct.externalId, 'no'),
     sku: sanitize(baseProduct.sku, 'no'),
     __typename: sanitize(baseProduct.__typename, 'no'),
+    metaDescription: findDescription(baseProduct),
+    metaKeyword: sanitize(baseProduct.metaKeyword, 'no'),
+    metaTitle: sanitize(baseProduct.metaTitle, 'no') || sanitize(baseProduct.name, 'no') || 'Product Details',
+    metaImage: primaryImage,
+    primaryImage: primaryImage,
     options: baseProduct.options ? [...baseProduct.options] : null,
     hasImages: baseProduct.images?.length > 0,
     imageList: getImageList(primaryImage, baseProduct.images),
     priceString: generatePriceString(baseProduct),
-    metaDescription: findDescription(baseProduct),
-    metaImage: primaryImage,
-    primaryImage: primaryImage,
-    metaTitle: baseProduct.metaTitle || baseProduct.name || 'Product Details',
   };
 }
 
